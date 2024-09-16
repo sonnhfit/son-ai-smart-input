@@ -37,13 +37,15 @@
         .input-container {
             margin-top: 20px;
         }
-        input[type="text"] {
+        textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 14px;
             box-sizing: border-box;
+            height: 100px;
+            resize: vertical;
         }
         button {
             display: block;
@@ -68,23 +70,25 @@
     
     <h2>How to use this extension:</h2>
     <ol>
-        <li>Select text in any input field</li>
-        <li>Press Ctrl+I (or Cmd+I on Mac)</li>
-        <li>Enter your desired input below</li>
-        <li>Click Submit to process and replace the text</li>
+        <li>Select text in any input field or focus on an input</li>
+        <li>The prompt popup will appear automatically</li>
+        <li>Alternatively, press Ctrl+I (or Cmd+I on Mac) to open the popup</li>
+        <li>Enter your desired input in the popup</li>
+        <li>Click Submit to process and update the text</li>
     </ol>
 
-    <h2>Đây là cách sẽ sử dụng extension:</h2>
+    <h2>Cách sử dụng extension:</h2>
     <ol>
-        <li>Chọn văn bản trong bất kỳ trường nhập liệu nào</li>
-        <li>Nhấn Ctrl+I (hoặc Cmd+I trên Mac)</li>
-        <li>Nhập nội dung mong muốn vào bên dưới</li>
-        <li>Nhấp vào Gửi để xử lý và thay thế văn bản</li>
+        <li>Chọn văn bản trong bất kỳ trường nhập liệu nào hoặc focus vào một trường nhập liệu</li>
+        <li>Cửa sổ popup sẽ tự động xuất hiện</li>
+        <li>Hoặc, nhấn Ctrl+I (hoặc Cmd+I trên Mac) để mở popup</li>
+        <li>Nhập nội dung mong muốn vào popup</li>
+        <li>Nhấp vào Gửi để xử lý và cập nhật văn bản</li>
     </ol>
 
     <div class="input-container">
-        <input type="text" id="smartInput" placeholder="Enter your text here...">
-        <button id="submitBtn">Submit</button>
+        <textarea id="smartInput" placeholder="Enter your text here..."></textarea>
+        <button id="submitBtn">Submit / Gửi</button>
     </div>
     <script src="popup.js"></script>
 </body>

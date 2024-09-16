@@ -8,14 +8,14 @@ chrome.commands.onCommand.addListener((command) => {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "processPrompt") {
-    processPrompt(request.prompt)
+    processPrompt(request.prompt, request.selectedText)
       .then(result => sendResponse({success: true, result: result}))
       .catch(error => sendResponse({success: false, error: error.message}));
     return true; // Indicates we will send a response asynchronously
   }
 });
 
-async function processPrompt(prompt) {
+async function processPrompt(prompt, selectedText) {
   // Replace 'https://api.example.com/process' with the actual API endpoint
   const apiUrl = 'https://api.example.com/process';
   
@@ -25,7 +25,10 @@ async function processPrompt(prompt) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ prompt: prompt }),
+      body: JSON.stringify({ 
+        prompt: prompt,
+        selectedText: selectedText || '' // Include selected text if available
+      }),
     });
 
     if (!response.ok) {
