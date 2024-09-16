@@ -18,7 +18,8 @@ document.addEventListener('focus', (event) => {
 }, true);
 
 document.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
+  // Updated condition to handle both Control and Command keys
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'i') {
     e.preventDefault();
     if (activeElement && !popupShown) {
       showPromptInput();
