@@ -1,5 +1,6 @@
 let selectedText = '';
 let activeElement = null;
+let popupShown = false; // Flag to check if popup has been shown
 
 document.addEventListener('mouseup', () => {
   const selection = window.getSelection().toString().trim();
@@ -19,7 +20,7 @@ document.addEventListener('focus', (event) => {
 document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
     e.preventDefault();
-    if (activeElement) {
+    if (activeElement && !popupShown) {
       showPromptInput();
     }
   }
@@ -48,6 +49,19 @@ function showPromptInput() {
   submitButton.textContent = 'Submit';
   submitButton.style.marginLeft = '10px';
 
+  const closeButton = document.createElement('button');
+  closeButton.textContent = 'X';
+  closeButton.style.cssText = `
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  `;
+
+  promptContainer.appendChild(closeButton);
   promptContainer.appendChild(promptInput);
   promptContainer.appendChild(submitButton);
   document.body.appendChild(promptContainer);
@@ -79,10 +93,18 @@ function showPromptInput() {
     if (prompt) {
       sendPromptToBackground(prompt);
     }
-    document.body.removeChild(promptContainer);
+    closePopup();
   });
 
+  closeButton.addEventListener('click', closePopup);
+
+  function closePopup() {
+    document.body.removeChild(promptContainer);
+    popupShown = false;
+  }
+
   promptInput.focus();
+  popupShown = true;
 }
 
 function sendPromptToBackground(prompt) {
