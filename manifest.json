@@ -1,0 +1,49 @@
+{
+    "manifest_version": 3,
+    "name": "Smart Input Assistant",
+    "version": "1.0",
+    "description": "Enhances input fields with AI-powered suggestions",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage"
+    ],
+    "icons": {
+        "16": "icons/icon-1.png",
+        "24": "icons/icon-2.png",
+        "32": "icons/icon-3.png"
+    },
+    "host_permissions": [
+        "https://*/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/icon-1.png",
+            "24": "icons/icon-2.png",
+            "32": "icons/icon-3.png"
+        }
+    },
+    "commands": {
+        "toggle-feature": {
+            "suggested_key": {
+                "default": "Ctrl+I",
+                "mac": "Command+I"
+            },
+            "description": "Toggle the input enhancement feature"
+        }
+    }
+}
