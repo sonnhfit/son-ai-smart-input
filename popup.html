@@ -1,95 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Input Assistant</title>
-    <style>
-        body {
-            width: 300px;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #333;
-            text-align: center;
-        }
-        h2 {
-            font-size: 18px;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        p {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #666;
-        }
-        ol {
-            padding-left: 20px;
-        }
-        li {
-            margin-bottom: 5px;
-        }
-        .input-container {
-            margin-top: 20px;
-        }
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            box-sizing: border-box;
-            height: 100px;
-            resize: vertical;
-        }
-        button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+  <title>Smart Input Assistant</title>
+  <style>
+    body { width: 300px; padding: 10px; }
+    input, select, button { width: 100%; margin-bottom: 10px; }
+  </style>
 </head>
 <body>
-    <h1>Smart Input Assistant</h1>
-    
-    <h2>How to use this extension:</h2>
-    <ol>
-        <li>Select text in any input field or focus on an input</li>
-        <li>The prompt popup will appear automatically</li>
-        <li>Alternatively, press Ctrl+I (or Cmd+I on Mac) to open the popup</li>
-        <li>Enter your desired input in the popup</li>
-        <li>Click Submit to process and update the text</li>
-    </ol>
-
-    <h2>Cách sử dụng extension:</h2>
-    <ol>
-        <li>Chọn văn bản trong bất kỳ trường nhập liệu nào hoặc focus vào một trường nhập liệu</li>
-        <li>Cửa sổ popup sẽ tự động xuất hiện</li>
-        <li>Hoặc, nhấn Ctrl+I (hoặc Cmd+I trên Mac) để mở popup</li>
-        <li>Nhập nội dung mong muốn vào popup</li>
-        <li>Nhấp vào Gửi để xử lý và cập nhật văn bản</li>
-    </ol>
-
-    <div class="input-container">
-        <textarea id="smartInput" placeholder="Enter your text here..."></textarea>
-        <button id="submitBtn">Submit / Gửi</button>
-    </div>
-    <script src="popup.js"></script>
+  <h2>Smart Input Assistant Settings</h2>
+  <input type="text" id="apiKey" placeholder="Enter your OpenAI API Key">
+  <select id="model">
+    <option value="gpt-4o-mini">GPT-4O Mini</option>
+    <option value="gpt-4o">GPT-4O</option>
+  </select>
+  <button id="saveSettings">Save Settings</button>
+  <button id="openPrompt">Open Prompt</button>
+  <script src="popup.js"></script>
 </body>
 </html>

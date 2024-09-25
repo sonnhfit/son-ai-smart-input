@@ -1,44 +1,55 @@
+// chrome.commands.onCommand.addListener((command) => {
+//   if (command === "open_prompt") {
+//     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+//       if (chrome.runtime.lastError) {
+//         console.error(chrome.runtime.lastError);
+//         return;
+//       }
+
+//       if (tabs.length === 0) {
+//         console.error("No active tab found");
+//         return;
+//       }
+
+//       const activeTab = tabs[0];
+//       console.log("Command open_prompt triggered for tab:", activeTab.id);
+
+//       chrome.tabs.sendMessage(activeTab.id, { action: "open_prompt" }, (response) => {
+//         if (chrome.runtime.lastError) {
+//           console.error("Error sending message:", chrome.runtime.lastError);
+//         } else {
+//           console.log("Message sent successfully, response:", response);
+//         }
+//       });
+//     });
+//   }
+// });
+
 chrome.commands.onCommand.addListener((command) => {
-  if (command === "toggle-feature") {
-    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, {action: "toggleInput"});
+  if (command === "open_prompt") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError);
+        return;
+      }
+
+      if (tabs.length === 0) {
+        console.error("No active tab found");
+        return;
+      }
+
+      const activeTab = tabs[0];
+      console.log("Command open_prompt triggered for tab:", activeTab.id);
+
+      chrome.tabs.sendMessage(activeTab.id, { action: "open_prompt" }, (response) => {
+        if (chrome.runtime.lastError) {
+          console.error("Error sending message:", chrome.runtime.lastError.message);
+        } else if (response) {
+          console.log("Message sent successfully, response:", response);
+        } else {
+          console.log("No response received");
+        }
+      });
     });
   }
 });
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "processPrompt") {
-    processPrompt(request.prompt, request.selectedText)
-      .then(result => sendResponse({success: true, result: result}))
-      .catch(error => sendResponse({success: false, error: error.message}));
-    return true; // Indicates we will send a response asynchronously
-  }
-});
-
-async function processPrompt(prompt, selectedText) {
-  // Replace 'https://api.example.com/process' with the actual API endpoint
-  const apiUrl = 'https://api.example.com/process';
-  
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        prompt: prompt,
-        selectedText: selectedText || '' // Include selected text if available
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.result; // Assuming the API returns a JSON object with a 'result' field
-  } catch (error) {
-    console.error('Error processing prompt:', error);
-    throw error;
-  }
-}

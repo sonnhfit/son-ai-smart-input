@@ -21,9 +21,7 @@
     },
     "content_scripts": [
         {
-            "matches": [
-                "<all_urls>"
-            ],
+            "matches": ["https://*/*", "http://*/*"],
             "js": [
                 "content.js"
             ]
@@ -38,12 +36,12 @@
         }
     },
     "commands": {
-        "toggle-feature": {
-            "suggested_key": {
-                "default": "Ctrl+I",
-                "mac": "Command+I"
-            },
-            "description": "Toggle the input enhancement feature"
+        "open_prompt": {
+          "suggested_key": {
+            "default": "Ctrl+I",
+            "mac": "Ctrl+I"
+          },
+          "description": "Open prompt input"
         }
     }
 }
