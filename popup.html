@@ -5,6 +5,9 @@
   <style>
     body { width: 300px; padding: 10px; }
     input, select, button { width: 100%; margin-bottom: 10px; }
+    #promptList { margin-top: 20px; }
+    .prompt-item { display: flex; justify-content: space-between; margin-bottom: 5px; }
+    .prompt-item button { width: auto; }
   </style>
 </head>
 <body>
@@ -16,6 +19,14 @@
   </select>
   <button id="saveSettings">Save Settings</button>
   <button id="openPrompt">Open Prompt</button>
+
+  <h3>Manage Prompts</h3>
+  <input type="text" id="newPromptName" placeholder="Prompt Name">
+  <input type="text" id="newPromptContent" placeholder="Prompt Content">
+  <button id="addPrompt">Add Prompt</button>
+
+  <div id="promptList"></div>
+
   <script src="popup.js"></script>
 </body>
 </html>
