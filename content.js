@@ -2,11 +2,15 @@ let textBox = null;
 let lastFocusedElement = null;
 let submitButton = null;
 let selectedText = '';
+let isDragging = false;
+let dragStartX, dragStartY;
 
 function closeTextBox() {
   if (textBox) {
     textBox.remove();
     document.removeEventListener('click', closeTextBoxOnClickOutside);
+    document.removeEventListener('mousemove', handleDrag);
+    document.removeEventListener('mouseup', stopDragging);
     textBox = null;
     
     if (lastFocusedElement) {
@@ -105,14 +109,60 @@ function createTextBox(initialText) {
     border: 1px solid #ccc;
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    cursor: move;
   `;
+
+  const dragHandle = document.createElement('div');
+  dragHandle.style.cssText = `
+  height: 14px;
+  background: #e0e0e0;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 8px;
+  cursor: move;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+`;
+  // dragHandle.textContent = 'Drag to move';
+  // textBox.appendChild(dragHandle);
+
+  // dragHandle.addEventListener('mousedown', startDragging);
+
+  // Thêm 3 chấm để biểu thị kéo thả
+const dragDots = document.createElement('div');
+dragDots.style.cssText = `
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+for (let i = 0; i < 3; i++) {
+  const dot = document.createElement('div');
+  dot.style.cssText = `
+    width: 4px;
+    height: 4px;
+    background-color: #999;
+    border-radius: 50%;
+    margin: 0 2px;
+  `;
+  dragDots.appendChild(dot);
+}
+
+dragHandle.appendChild(dragDots);
+textBox.appendChild(dragHandle);
+
+dragHandle.addEventListener('mousedown', startDragging);
+
 
   const closeButton = document.createElement('button');
   closeButton.innerHTML = '&times;';
   closeButton.style.cssText = `
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 7px;
+    right: 10px;
     background: none;
     border: none;
     font-size: 18px;
@@ -161,7 +211,7 @@ function createTextBox(initialText) {
 
   const textarea = document.createElement('textarea');
   textarea.style.cssText = `
-    width: 400px;
+    width: 600px;
     height: 200px;
     resize: both;
     margin-bottom: 10px;
@@ -193,6 +243,26 @@ function createTextBox(initialText) {
   textarea.setSelectionRange(textarea.value.length, textarea.value.length);
 
   document.addEventListener('click', closeTextBoxOnClickOutside);
+  document.addEventListener('mousemove', handleDrag);
+  document.addEventListener('mouseup', stopDragging);
+}
+
+function startDragging(e) {
+  isDragging = true;
+  dragStartX = e.clientX - textBox.offsetLeft;
+  dragStartY = e.clientY - textBox.offsetTop;
+}
+
+function handleDrag(e) {
+  if (!isDragging) return;
+  const newX = e.clientX - dragStartX;
+  const newY = e.clientY - dragStartY;
+  textBox.style.left = `${newX}px`;
+  textBox.style.top = `${newY}px`;
+}
+
+function stopDragging() {
+  isDragging = false;
 }
 
 let lastMouseX = 0;
