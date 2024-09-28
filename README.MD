@@ -1,6 +1,7 @@
 # Smart Input Assistant
 
 Smart Input Assistant is a Chrome extension that enhances your text input experience with customizable prompts and AI-powered text generation.
+[DEMO video](https://youtu.be/zKabyj_uZ04)
 
 ## Features
 
